@@ -30,15 +30,25 @@ function main(){
     var arg = process.argv.slice(2);
     var func;
     // Argument collecting is primitive in current state
-    var word = arg[1];
+    var word;
+    var threshold = 1;
     
     // Determine which function user's calling
     switch (arg[0]) {
         case 'whohas':
             func = 'Whohas';
+            word = arg[1];
             break;
         case 'whohas2':
             func = 'Whohas2';
+            word = arg[1];
+            if (arg.length === 3) {
+                threshold = parseInt(arg[2]);
+                if (isNaN(threshold)) {
+                    console.log('Threshold must be a number.');
+                    process.exit(1);
+                }
+            }
             break;
         default:
             console.log('\nUsage: make client-node ARGS="whohas <word>"\n');
