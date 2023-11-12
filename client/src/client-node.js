@@ -33,9 +33,12 @@ function main(){
     var word = arg[1];
     
     // Determine which function user's calling
-    switch(arg[0]){
+    switch (arg[0]) {
         case 'whohas':
             func = 'Whohas';
+            break;
+        case 'whohas2':
+            func = 'Whohas2';
             break;
         default:
             console.log('\nUsage: make client-node ARGS="whohas <word>"\n');
@@ -46,11 +49,33 @@ function main(){
     // This allows us to call the 'Whohas' function defined in the 'KeywordSearch' service
     // Additionally, send requests to port 50051
     const client = new keysearchProto.KeywordSearch(SOCKET, grpc.credentials.createInsecure());
-    // Finally, call the function
-    client[func]({word: word}, (err, response) => {
+    const request = { word: word };
+
+    if (func === 'Whohas2') {
+        // Check if enough arguments are provided for 'whohas2'
+        if (arg.length !== 3) {
+            console.log('Usage: make client-node ARGS="whohas2 <word> <threshold>"');
+            process.exit(1);
+        }
+    
+        // Parse the threshold value and set it in the request
+        var threshold = parseInt(arg[2]);
+        if (isNaN(threshold)) {
+            console.log('Threshold must be a number.');
+            process.exit(1);
+        }
+
+        request.threshold = threshold;
+    }
+
+    client[func](request, (err, response) => {
+        if (err) {
+            console.error(err);
+            process.exit(1);
+        }
         console.log(response.Results);
         process.exit(0);
     });
-};
+}
 
 main();
