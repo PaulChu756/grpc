@@ -31,7 +31,8 @@ class Server(keysearch_pb2_grpc.KeywordSearchServicer):
         logging.info(context)
         #get input from request
         queryword=request.word
-        mincount=1 # minimum number of word occurence to return into the result (integer 1)
+        #mincount=1 # minimum number of word occurence to return into the result (integer 1)
+        mincount = request.threshold
 
         #prepare result
         response: keysearch_pb2.RepeatedResult = keysearch_pb2.RepeatedResult()
@@ -39,22 +40,6 @@ class Server(keysearch_pb2_grpc.KeywordSearchServicer):
             for filename,i_count in fakedatabase[queryword]:
                 if(i_count>=mincount):
                     response.Results.append(keysearch_pb2.Result(word=queryword,file=filename,count=i_count))
-        return response
-
-    def WhoHas2(self, request: keysearch_pb2.Query, context):
-        logging.info(request)
-        logging.info(context)
-
-        query_word = request.word
-        threshold = request.threshold
-
-        response: keysearch_pb2.RepeatedResult = keysearch_pb2.RepeatedResult()
-
-        if query_word in fakedatabase.keys():
-            for filename, count in fakedatabase[query_word]:
-                if count >= threshold:
-                    response.Results.append(keysearch_pb2.Result(word=query_word, file=filename, count=count))
-        
         return response
     
 def _serve(port: Text):
