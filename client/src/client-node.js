@@ -34,7 +34,6 @@ function main() {
     console.log("arg[0] = " + arg[0]);
     console.log("arg[1] = " + arg[1]);
     console.log("arg[2] = " + arg[2]);
-    console.log("arg[3] = " + arg[3]);
     threshold = parseInt(arg[2]);
     console.log("Threshold = " + threshold);
 
@@ -42,9 +41,11 @@ function main() {
     switch (arg[0]) {
         case 'whohas':
             func = 'Whohas';
+            console.log("Whohas");
             break;
         case 'whohas2':
             func = 'Whohas2';
+            console.log("Whohas2");
             break;
         default:
             console.log('\nUsage: make client-node ARGS="whohas <word>"\n');
@@ -56,7 +57,7 @@ function main() {
     const request = { word: word, threshold: threshold }; // Always set threshold
 
     console.log(`Calling ${func} with word: ${word} and threshold: ${threshold}`);
-    console.log("Request : " + request);
+    console.log("Request : " + request.threshold);
 
     client[func](request, (err, response) => {
         if (err) {
