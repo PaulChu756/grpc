@@ -23,9 +23,10 @@ const keysearchProto = grpc.loadPackageDefinition(packageDefinition).proto.keyse
 function main(){
     // Simple error catching
     // if(process.argv[3 === undefined]){
-    if (process.argv.length !== 5 || process.argv[2] !== 'whohas2') {
-        return console.log('Usage: make client-node ARGS="whohas <word>"');
-    }
+        if (process.argv.length !== 5 || (process.argv[2] !== 'whohas2' && process.argv[2] !== '"whohas2"')) {
+            return console.log('Usage: make client-node ARGS="whohas <word>"');
+        }
+        
 
     // Parse user's arguments
     var arg = process.argv.slice(2);
