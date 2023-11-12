@@ -68,6 +68,8 @@ function main(){
         request.threshold = threshold;
     }
 
+    console.log(`Calling ${func} with word: ${word} and threshold: ${request.threshold}`);
+
     client[func](request, (err, response) => {
         if (err) {
             console.error(err);
