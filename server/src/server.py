@@ -42,7 +42,7 @@ class Server(keysearch_pb2_grpc.KeywordSearchServicer):
         return response
 
 
-    def WhoHas2(self, request: keysearch_pb2.Query, context):
+    def Whohas2(self, request: keysearch_pb2.Query, context):
         logging.info(request)
         logging.info(context)
 
