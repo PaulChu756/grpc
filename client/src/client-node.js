@@ -29,25 +29,22 @@ function main() {
     // Parse user's argument
     var arg = process.argv.slice(2);
     var func;
-    var word;
-    var threshold = 1; // Default threshold
+    var word = arg[1];
+    let threshold = 1; // Default threshold
+    console.log("arg[0] = " + arg[0]);
+    console.log("arg[1] = " + arg[1]);
+    console.log("arg[2] = " + arg[2]);
+    console.log("arg[3] = " + arg[3]);
+    threshold = parseInt(arg[2]);
+    console.log("Threshold = " + threshold);
 
     // Determine which function user's calling
     switch (arg[0]) {
         case 'whohas':
             func = 'Whohas';
-            word = arg[1];
             break;
         case 'whohas2':
             func = 'Whohas2';
-            word = arg[1];
-            if (arg.length === 3) {
-                threshold = parseInt(arg[2]);
-                if (isNaN(threshold)) {
-                    console.log('Threshold must be a number.');
-                    process.exit(1);
-                }
-            }
             break;
         default:
             console.log('\nUsage: make client-node ARGS="whohas <word>"\n');
@@ -59,6 +56,7 @@ function main() {
     const request = { word: word, threshold: threshold }; // Always set threshold
 
     console.log(`Calling ${func} with word: ${word} and threshold: ${threshold}`);
+    console.log("Request : " + request);
 
     client[func](request, (err, response) => {
         if (err) {
