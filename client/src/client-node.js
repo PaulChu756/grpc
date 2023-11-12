@@ -55,8 +55,20 @@ function main() {
     const request = { word: word };
 
     if (func === 'Whohas2') {
-        request.threshold = threshold;
+        // Check if enough arguments are provided for 'whohas2'
+        if (arg.length !== 4) {
+            console.log('Usage: make client-node ARGS="whohas2 <word> <threshold>"');
+            process.exit(1);
+        }
+    
+        // Parse the threshold value
+        var threshold = parseInt(arg[3]);
+        if (isNaN(threshold)) {
+            console.log('Threshold must be a number.');
+            process.exit(1);
+        }
     }
+    
 
     client[func](request, (err, response) => {
         if (err) {
